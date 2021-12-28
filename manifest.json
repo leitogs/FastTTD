@@ -1,0 +1,35 @@
+{
+  "manifest_version": 3,
+  "name": "Timer bypass",
+  "version": "0.1.1",
+  "description": "Changes Timer to 1 second",
+  "author": "leitogs",
+  "action": {
+    "default_icon": {
+      "16": "timer_16.png",
+      "32": "timer_32.png",
+      "48": "timer_48.png",
+      "128": "timer_128.png"
+    },
+    "default_popup": "popup.html",
+    "default_title": "Skips timer to 1 second"
+  },
+  "icons": {
+    "16": "timer_16.png",
+    "32": "timer_32.png",
+    "48": "timer_48.png",
+    "128": "timer_128.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "run_at": "document_start",
+      "matches": ["<all_urls>"],
+      "js": ["content.js"]
+    }
+  ],
+  "permissions": ["storage", "activeTab", "scripting"],
+  "host_permissions": ["http://*/*", "https://*/*"]
+}
