@@ -1,5 +1,3 @@
-let CAPTCHA = "";
-
 if (document.readyState === "loading") {
   console.log("DOM Loading!");
   setLocal();
@@ -53,10 +51,20 @@ function solve() {
   const dataUrl = canvas.toDataURL();
   let input = document.getElementsByName("captcha")[0];
   cbl.solve(dataUrl).done(function (solution) {
-    CAPTCHA = solution;
     navigator.clipboard.writeText(solution);
-    // input.value = solution;
+    setInput(input, solution);
   });
+}
+
+function setInput(input, value) {
+  var nativeInputValueSetter = Object.getOwnPropertyDescriptor(
+    window.HTMLInputElement.prototype,
+    "value"
+  ).set;
+  nativeInputValueSetter.call(input, value);
+
+  var ev2 = new Event("input", { bubbles: true });
+  input.dispatchEvent(ev2);
 }
 
 function setListener() {
@@ -67,30 +75,6 @@ function setListener() {
     event.preventDefault();
     setTimeout(solve, 2);
   });
-
-  let otp = document.getElementsByClassName("css-135g3kv")[0];
-  otp.addEventListener("click", (event) => {
-    event.preventDefault();
-    setTimeout(solve, 2);
-  });
-
-  // let mobile = document.getElementsByName("mobileNum")[0];
-  // mobile.addEventListener("focus", (e) => {
-  //   console.log("Mobile FOCUS");
-  // });
-
-  // let input = document.getElementsByName("captcha")[0];
-  // input.addEventListener("focus", () => {
-  //   console.log("FOCUS");
-  //   // input.value = CAPTCHA;
-  // });
-
-  // var s = document.createElement("script");
-  // s.src = chrome.runtime.getURL("dialog.js");
-  // s.onload = function () {
-  //   this.remove();
-  // };
-  // (document.head || document.documentElement).appendChild(s);
 }
 
 function getModel() {
