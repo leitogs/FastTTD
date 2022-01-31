@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Timer bypass",
-  "version": "0.1.1",
-  "description": "Changes Timer to 1 second",
+  "name": "TTD Bypass",
+  "version": "1.0.0",
+  "description": "Resets Timer to 1 second and solves CAPTCHA images.",
   "author": "leitogs",
   "action": {
     "default_icon": {
@@ -11,7 +11,7 @@
       "48": "timer_48.png",
       "128": "timer_128.png"
     },
-    "default_title": "Skips timer to 1 second"
+    "default_title": "TTD Bypass"
   },
   "icons": {
     "16": "timer_16.png",
