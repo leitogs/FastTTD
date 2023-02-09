@@ -1,0 +1,31 @@
+name: Main
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: ".nvmrc"
+          cache: npm
+      - name: install
+        run: npm ci || npm install
+      - name: Build
+        run: npm run build
+      - name: Pack
+        run: npm run zip
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: FastTTD.zip
+        env:
+          VITE_SSE_URL: ${{ secrets.VITE_SSE_URL }}
+permissions:
+  contents: write
