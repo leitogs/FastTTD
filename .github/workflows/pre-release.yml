@@ -2,8 +2,15 @@ name: "pre-release"
 
 on:
   push:
-    branches:
-      - "master"
+    branches: [master]
+    paths-ignore:
+      - "*.md"
+      - "*.json"
+      - ".github"
+
+concurrency:
+  group: "pre-release"
+  cancel-in-progress: true
 
 jobs:
   pre-release:
@@ -27,7 +34,7 @@ jobs:
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "latest"
+          automatic_release_tag: "pre-release"
           prerelease: true
-          title: "Development Build"
+          title: "Pre-release Build"
           files: FastTTD.zip
