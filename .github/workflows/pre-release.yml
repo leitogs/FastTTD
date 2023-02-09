@@ -1,0 +1,33 @@
+name: "pre-release"
+
+on:
+  push:
+    branches:
+      - "master"
+
+jobs:
+  pre-release:
+    name: "Pre Release"
+    runs-on: "ubuntu-latest"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "16.x"
+          cache: npm
+      - name: install
+        run: npm ci || npm install
+      - name: Build
+        env:
+          VITE_SSE_URL: ${{ secrets.VITE_SSE_URL }}
+        run: npm run build
+      - name: Pack
+        run: npm run zip
+      - uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "latest"
+          prerelease: true
+          title: "Development Build"
+          files: FastTTD.zip
