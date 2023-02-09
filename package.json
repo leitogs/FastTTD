@@ -7,7 +7,7 @@
   "scripts": {
     "build": "vite build",
     "dev": "nodemon",
-    "zip": "tar acvf FastTTD.zip -C dist *"
+    "zip": "tar acvf ./ttd.zip -C ./dist/ *"
   },
   "type": "module",
   "devDependencies": {
