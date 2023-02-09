@@ -1,9 +1,6 @@
 name: Main
 
-on:
-  push:
-    tags:
-      - "v*.*.*"
+on: push
 
 jobs:
   build:
@@ -18,14 +15,15 @@ jobs:
       - name: install
         run: npm ci || npm install
       - name: Build
+        env:
+          VITE_SSE_URL: ${{ secrets.VITE_SSE_URL }}
         run: npm run build
       - name: Pack
         run: npm run zip
       - name: Release
         uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
         with:
           files: FastTTD.zip
-        env:
-          VITE_SSE_URL: ${{ secrets.VITE_SSE_URL }}
 permissions:
   contents: write
