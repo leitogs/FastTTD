@@ -77,23 +77,41 @@ function checkTnC_SED() {
 }
 
 function skipOnlineSevaTnCPages() {
-  if (window.location.hash !== "#/welcome") return;
+  if (window.location.hash !== ("#/welcome" && "#/login")) return;
   const observer = new MutationObserver((mutation) => {
     mutation.forEach((element) => {
       if (element.type === "childList" && element.addedNodes.length) {
         const target = element.target as HTMLElement;
-        const parentDiv = target?.children[7]?.children[0]?.children[1];
-        if (target.id === "container" && parentDiv) {
-          const virSeva =
-            parentDiv.children[2].children[0].children[12].children[1];
-          const tirumala = virSeva.children[0].firstChild as HTMLAnchorElement;
-          const tiruchanoor = virSeva.children[1]
-            .firstChild as HTMLAnchorElement;
-          const srinivasamangapuram = virSeva.children[2]
-            .firstChild as HTMLAnchorElement;
-          tirumala.href = "#/virtualSevaCal";
-          tiruchanoor.href = "#/virtualPATSevaCal";
-          srinivasamangapuram.href = "#/virtualSevaSriKalyanaCal";
+        if (target.id === "container") {
+          const parentDiv = target?.children[7]?.children[0]?.children[1];
+          const parentDivHomePage = target?.children[8]?.children[10];
+          if (parentDiv) {
+            const virSeva =
+              parentDiv.children[2].children[0].children[12].children[1];
+            const tirumala = virSeva.children[0]
+              .firstChild as HTMLAnchorElement;
+            const tiruchanoor = virSeva.children[1]
+              .firstChild as HTMLAnchorElement;
+            const srinivasamangapuram = virSeva.children[2]
+              .firstChild as HTMLAnchorElement;
+            tirumala.href = "#/virtualSevaCal";
+            tiruchanoor.href = "#/virtualPATSevaCal";
+            srinivasamangapuram.href = "#/virtualSevaSriKalyanaCal";
+          }
+          if (parentDivHomePage) {
+            const virSevaHomePage =
+              parentDivHomePage?.children[2]?.children[0]?.children[3]
+                ?.children[1];
+            const tirumalaHomePage = virSevaHomePage?.children[0]
+              ?.firstChild as HTMLAnchorElement;
+            const tiruchanoorHomePage = virSevaHomePage?.children[1]
+              ?.firstChild as HTMLAnchorElement;
+            const srinivasamangapuramHomePage = virSevaHomePage?.children[2]
+              ?.firstChild as HTMLAnchorElement;
+            tirumalaHomePage.href = "#/virtualSevaCal";
+            tiruchanoorHomePage.href = "#/virtualPATSevaCal";
+            srinivasamangapuramHomePage.href = "#/virtualSevaSriKalyanaCal";
+          }
         }
       }
     });
