@@ -7,13 +7,15 @@ let captcha = "";
 CanvasRenderingContext2D.prototype.fillText = function () {
   originalCanvasRenderingContext.apply(this, arguments as any);
   console.log("Detected canvas");
-  if (window.location.pathname === "/login") {
+  const path = window.location.pathname;
+  const hash = window.location.hash;
+  if (path === "/login" || path === "/accommodation/login") {
     const text = arguments[0].split(" ").join("");
     captcha = text;
     sendEvent();
     return;
   }
-  if (window.location.hash === "#/login") {
+  if (hash === "#/login") {
     count++;
     captcha += arguments[0];
     if (count === 7) {
