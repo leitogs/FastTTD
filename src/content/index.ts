@@ -125,7 +125,8 @@ function skipOnlineSevaTnCPages() {
 
 let eventSource: EventSource;
 function connectSSE(userID: string) {
-  if (!isMainSite() && window.location.pathname === "/login") {
+  const path = window.location.pathname;
+  if (!isMainSite() && (path === "/login" || path === "/accommodation/login")) {
     eventSource?.close();
     eventSource = new EventSource(`${import.meta.env.VITE_SSE_URL}${userID}`);
     eventSource.onmessage = (event) => {
